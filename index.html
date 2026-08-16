@@ -196,10 +196,10 @@
     <h1 class="name" data-en="Jun Wei Luo">羅竣瑋</h1>
     <div class="name-en">Kevin Luo</div>
     <p class="lead" data-en="Taking products from <b>concept</b> to <b>mass production</b> — a mechanical engineer spanning design, supply chain, production setup, and team building.">把產品從<b>概念</b>帶到<b>量產</b>——橫跨機構設計、供應鏈、產線建置與團隊組建的工程負責人。</p>
-    <p class="sub" data-en="Mechanical design is my core, but what I do best is take a design from R&amp;D and prototype all the way to production — delivered on time and on target.">機構設計是我的本職，而我更擅長把一個設計從 RD、原型，一路落地到小批量量產（0 → 1 → 小批量）——準時、達標地交付。</p>
+    <p class="sub" data-en="Starting from mechanical design, I run the full chain end-to-end — R&amp;D, prototyping, supply chain, and mass production. Not just drawings, but products built stably and at scale.">從機構設計出發，我能一條龍走完研發、原型、供應鏈到量產——不只畫得出圖，更能讓產品穩定、可規模化地被製造出來。</p>
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary" data-en="See my work →">看我做過的東西 →</a>
-      <a href="resume.pdf" class="btn btn-ghost" target="_blank" data-en="Download résumé">下載履歷</a>
+      <a href="resume.pdf" id="resumeBtn" class="btn btn-ghost" target="_blank" data-en="Download résumé">下載履歷</a>
     </div>
     <div class="stats">
       <div class="stat"><div class="num"><i>6</i>+</div><div class="lbl" data-en="yrs mechanical design">年機構設計經驗</div></div>
@@ -458,6 +458,9 @@
     });
     langBtn.textContent = (lang==='en') ? '中' : 'EN';
     document.documentElement.lang = (lang==='en') ? 'en' : 'zh-Hant';
+    // switch résumé download to matching language
+    var rb = document.getElementById('resumeBtn');
+    if(rb) rb.setAttribute('href', (lang==='en') ? 'resume-en.pdf' : 'resume.pdf');
   }
   langBtn.addEventListener('click', ()=> applyLang(LANG==='zh' ? 'en' : 'zh'));
 
