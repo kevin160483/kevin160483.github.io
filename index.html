@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>羅竣瑋 Jun Wei Luo — 產品開發 · 機構工程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&family=DM+Mono:wght@400;500&family=Archivo:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101826;--ink-soft:#4a5568;--line:#e2e8f0;--paper:#f6f8fb;--panel:#ffffff;
+    --accent:#1d5fd6;--accent-deep:#123f96;--steel:#2b3f5c;--grid:#e6ecf4;
+    --mono:'DM Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter','Noto Sans TC',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px}
+  .mono{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase}
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(246,248,251,.82);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-family:'Archivo',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.01em}
+  .brand span{color:var(--accent)}
+  .navlinks{display:flex;gap:30px;align-items:center}
+  .navlinks a{color:var(--ink-soft);text-decoration:none;font-size:.86rem;font-weight:500;transition:color .2s;position:relative}
+  .navlinks a:hover{color:var(--accent)}
+  .navlinks a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:2px;background:var(--accent);transition:width .25s}
+  .navlinks a:hover::after{width:100%}
+  .nav-cta{border:1.5px solid var(--ink);border-radius:2px;padding:7px 16px !important;color:var(--ink) !important;font-weight:600 !important}
+  .nav-cta:hover{background:var(--ink);color:#fff !important}
+  .nav-cta::after{display:none}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}
+  .burger span{width:24px;height:2px;background:var(--ink);transition:.3s}
+  .lang-toggle{margin-left:24px;background:none;border:1.5px solid var(--line);border-radius:2px;padding:6px 12px;font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.08em;color:var(--ink-soft);cursor:pointer;transition:.2s}
+  .lang-toggle:hover{border-color:var(--accent);color:var(--accent)}
+  header.hero{padding:150px 0 90px;position:relative;background:linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/56px 56px,linear-gradient(0deg,var(--grid) 1px,transparent 1px) 0 0/56px 56px,var(--paper)}
+  header.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 72% 15%,transparent 38%,var(--paper) 76%);pointer-events:none}
+  .hero-inner{position:relative;z-index:2;max-width:860px}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--accent);margin-bottom:26px}
+  .eyebrow .dot{width:8px;height:8px;background:var(--accent);border-radius:50%;box-shadow:0 0 0 4px rgba(29,95,214,.15)}
+  h1.name{font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(2.7rem,7vw,5rem);line-height:.98;letter-spacing:-.03em;margin-bottom:8px}
+  .name-en{font-family:var(--mono);color:var(--ink-soft);font-size:clamp(.9rem,2vw,1.1rem);letter-spacing:.3em;text-transform:uppercase;margin-bottom:34px}
+  .lead{font-size:clamp(1.15rem,2.4vw,1.5rem);font-weight:500;color:var(--ink);max-width:700px;line-height:1.55;margin-bottom:16px}
+  .lead b{color:var(--accent);font-weight:700}
+  .sub{color:var(--ink-soft);max-width:640px;font-size:1.02rem;margin-bottom:40px}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 26px;border-radius:2px;font-weight:600;font-size:.95rem;text-decoration:none;transition:.22s;cursor:pointer}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:var(--accent-deep);transform:translateY(-2px)}
+  .btn-ghost{border:1.5px solid var(--ink);color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:#fff}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:3px;margin-top:64px;background:var(--panel);position:relative;z-index:2;overflow:hidden}
+  .stat{padding:26px 24px;border-right:1px solid var(--line)}
+  .stat:last-child{border-right:none}
+  .stat .num{font-family:'Archivo',sans-serif;font-weight:800;font-size:2rem;line-height:1;color:var(--steel)}
+  .stat .num i{color:var(--accent);font-style:normal}
+  .stat .lbl{color:var(--ink-soft);font-size:.82rem;margin-top:8px}
+  section{padding:90px 0;position:relative}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:52px;flex-wrap:wrap}
+  .sec-num{font-family:var(--mono);color:var(--accent);font-size:.8rem;letter-spacing:.1em}
+  .sec-title{font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(1.7rem,4vw,2.5rem);letter-spacing:-.02em}
+  .sec-line{flex:1;height:1px;background:var(--line);min-width:40px}
+  .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:56px;align-items:start}
+  .about-text p{color:var(--ink-soft);font-size:1.06rem;margin-bottom:20px}
+  .about-text b{color:var(--ink);font-weight:600}
+  .capsules{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .cap{border:1px solid var(--line);background:var(--panel);border-radius:2px;padding:7px 14px;font-size:.85rem;color:var(--ink-soft);font-weight:500}
+  .portrait-wrap{position:relative;max-width:280px;margin:0 auto}
+  .portrait{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center top;border-radius:4px;display:block;filter:grayscale(10%);border:1px solid var(--line)}
+  .portrait-tag{position:absolute;left:16px;bottom:16px;background:rgba(16,24,38,.86);color:#fff;font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;padding:6px 12px;border-radius:2px}
+  .job{display:grid;grid-template-columns:210px 1fr;gap:40px;padding:38px 0;border-top:1px solid var(--line)}
+  .job:last-child{border-bottom:1px solid var(--line)}
+  .job-logo{height:auto;max-height:46px;width:auto;max-width:150px;object-fit:contain;object-position:left center;margin-bottom:18px;display:block}
+  .job-logo.logo-square{max-height:52px;max-width:52px}
+  .job-meta .when{font-family:var(--mono);font-size:.78rem;color:var(--accent);letter-spacing:.06em}
+  .job-meta .role{font-weight:700;margin-top:10px;font-size:1.02rem;line-height:1.4}
+  .job-meta .org{color:var(--ink-soft);font-size:.92rem;margin-top:4px}
+  .job-meta .tag{display:inline-block;margin-top:12px;font-size:.72rem;font-weight:600;color:#fff;background:var(--accent);border-radius:2px;padding:4px 10px;letter-spacing:.03em}
+  .job-body .ctx{color:var(--ink-soft);font-size:.98rem;margin-bottom:18px;border-left:2px solid var(--accent);padding-left:16px;font-style:italic}
+  .caps{list-style:none;display:grid;gap:12px}
+  .caps li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline}
+  .caps li .k{font-weight:700;color:var(--ink);font-size:.95rem;white-space:nowrap}
+  .caps li .v{color:var(--ink-soft);font-size:.95rem}
+  .win{margin-top:18px;background:#eef4ff;border:1px solid #cfe0fb;border-radius:3px;padding:14px 16px;font-size:.92rem;color:var(--accent-deep);display:flex;gap:10px}
+  .win b{color:var(--accent);font-weight:700}
+  .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .group-label{display:flex;align-items:center;gap:14px;margin:48px 0 22px}
+  .group-label:first-of-type{margin-top:8px}
+  .group-label .gl-title{font-family:'Archivo',sans-serif;font-weight:700;font-size:1.15rem;color:var(--ink);white-space:nowrap}
+  .group-label .gl-note{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);letter-spacing:.1em;white-space:nowrap}
+  .group-label .gl-line{flex:1;height:1px;background:var(--line)}
+  .amp{font-family:'Georgia','Times New Roman',serif;font-style:italic;font-weight:400;padding:0 .02em}
+  .proj{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel);transition:.25s;display:flex;flex-direction:column}
+  .proj:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(16,24,38,.1);border-color:#c9d6ea}
+  .proj-img{aspect-ratio:4/3;overflow:hidden;background:#f0f3f8;border-bottom:1px solid var(--line);position:relative;cursor:pointer}
+  .proj-img img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .5s;padding:6px}
+  .proj:hover .proj-img img{transform:scale(1.03)}
+  .proj-img::after{content:"點擊看更多 ↗";position:absolute;bottom:8px;right:10px;font-family:var(--mono);font-size:.62rem;color:var(--accent);background:rgba(255,255,255,.85);padding:3px 8px;border-radius:2px;opacity:0;transition:opacity .2s}
+  .proj:hover .proj-img::after{opacity:1}
+  .proj-body{padding:20px;flex:1;display:flex;flex-direction:column}
+  .proj-body h3{font-size:1.05rem;font-weight:700;margin-bottom:6px}
+  .proj-body .meta{font-family:var(--mono);font-size:.68rem;color:var(--accent);letter-spacing:.1em;margin-bottom:10px}
+  .proj-body p{color:var(--ink-soft);font-size:.9rem;flex:1}
+  .proj-body .badge{margin-top:12px;font-size:.75rem;color:var(--steel);font-weight:600}
+  .feature{display:grid;grid-template-columns:1.1fr 1fr;border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--panel);margin-bottom:24px}
+  .feature-img{background:#f0f3f8;min-height:320px;display:flex;align-items:center;justify-content:center;padding:24px;border-right:1px solid var(--line)}
+  .feature-img img{width:100%;height:100%;object-fit:contain;max-height:400px}
+  .feature-body{padding:40px;display:flex;flex-direction:column;justify-content:center}
+  .feature-body .meta{font-family:var(--mono);font-size:.7rem;color:var(--accent);letter-spacing:.12em;margin-bottom:12px}
+  .feature-body h3{font-family:'Archivo',sans-serif;font-size:1.7rem;font-weight:800;margin-bottom:14px;line-height:1.15}
+  .feature-body p{color:var(--ink-soft);font-size:.98rem;margin-bottom:10px}
+  .feature-body .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .feature-body .tags span{font-size:.78rem;color:var(--steel);background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:4px 10px}
+  .skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .skill-card{border:1px solid var(--line);border-radius:4px;background:var(--panel);padding:26px 28px}
+  .skill-card.lead-card{border-color:var(--line);background:var(--panel);border-left:3px solid var(--accent);box-shadow:none}
+  .skill-card h4{font-family:'Archivo',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .skill-card h4 .n{font-family:var(--mono);font-size:.72rem;color:var(--accent)}
+  .skill-card .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .skill-card .tags span{background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:5px 11px;font-size:.83rem;color:var(--ink-soft)}
+  .contact{color:#fff;border-radius:6px;padding:64px 56px;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center;background-image:linear-gradient(135deg,#101826,#1c2c44)}
+  .contact h2{font-family:'Archivo',sans-serif;font-weight:800;font-size:2.2rem;line-height:1.1;margin-bottom:16px}
+  .contact p{color:#aebbce;font-size:1.02rem;line-break:strict;word-break:keep-all;max-width:26em}
+  .contact-links{display:grid;gap:14px}
+  .contact-links a{display:flex;align-items:center;gap:14px;color:#fff;text-decoration:none;border:1px solid #2d3f5a;border-radius:3px;padding:16px 20px;transition:.2s;font-weight:500}
+  .contact-links a:hover{background:rgba(29,95,214,.14);border-color:var(--accent);transform:translateX(4px)}
+  .contact-links .lab{font-family:var(--mono);font-size:.7rem;color:#7d8ba3;letter-spacing:.1em;display:block}
+  .contact-links .val{font-size:.98rem}
+  footer{padding:40px 0;text-align:center;color:var(--ink-soft);font-size:.85rem;border-top:1px solid var(--line)}
+  footer .mono{color:#9aa6ba}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  .modal-backdrop{position:fixed;inset:0;background:rgba(16,24,38,.7);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity .25s}
+  .modal-backdrop.open{display:flex;opacity:1}
+  .modal{background:var(--panel);border-radius:6px;max-width:860px;width:100%;max-height:88vh;overflow-y:auto;position:relative;transform:translateY(16px);transition:transform .25s}
+  .modal-backdrop.open .modal{transform:none}
+  .modal-close{position:absolute;top:14px;right:14px;z-index:5;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:50%;width:38px;height:38px;font-size:1.3rem;line-height:1;cursor:pointer;color:var(--ink);display:flex;align-items:center;justify-content:center;transition:.2s}
+  .modal-close:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .modal-gallery{background:#f0f3f8;padding:20px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid var(--line);align-items:center}
+  .modal-gallery img{width:100%;max-width:700px;max-height:440px;object-fit:contain;border-radius:4px;display:block;border:1px solid var(--line);background:#fff}
+  .modal-body{padding:28px 32px 32px;text-align:center}
+  .modal-body .meta{font-family:var(--mono);font-size:.7rem;color:var(--accent);letter-spacing:.12em;margin-bottom:10px}
+  .modal-body h3{font-family:'Archivo',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:16px}
+  .modal-body p{color:var(--ink-soft);font-size:1rem;margin-bottom:14px;line-height:1.7;text-align:left;max-width:620px;margin-left:auto;margin-right:auto}
+  .modal-body .badge{display:inline-block;font-size:.78rem;color:var(--steel);background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:5px 12px;font-weight:600}
+
+  @media(max-width:860px){
+    .navlinks{position:fixed;top:64px;left:0;right:0;background:var(--paper);flex-direction:column;gap:0;padding:0;max-height:0;overflow:hidden;border-bottom:1px solid var(--line);transition:max-height .3s}
+    .navlinks.open{max-height:340px}
+    .navlinks a{width:100%;padding:16px 32px;border-bottom:1px solid var(--line)}
+    .nav-cta{margin:16px 32px;text-align:center}
+    .burger{display:flex}
+    .about-grid{grid-template-columns:1fr;gap:36px}
+    .portrait-wrap{max-width:320px}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .stat:nth-child(2){border-right:none}
+    .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--line)}
+    .job{grid-template-columns:1fr;gap:20px}
+    .proj-grid{grid-template-columns:1fr 1fr}
+    .feature{grid-template-columns:1fr}
+    .feature-img{min-height:240px}
+    .feature-body{padding:32px}
+    .skill-grid{grid-template-columns:1fr}
+    .contact{grid-template-columns:1fr;padding:44px 32px}
+  }
+  @media(max-width:540px){
+    .wrap{padding:0 20px}
+    .proj-grid{grid-template-columns:1fr}
+    .caps li{grid-template-columns:1fr;gap:2px}
+    .caps li .k{white-space:normal}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">JW<span>.</span>LUO</div>
+    <button class="burger" id="burger" aria-label="menu"><span></span><span></span><span></span></button>
+    <div class="navlinks" id="navlinks">
+      <a href="#about" data-en="About">關於</a>
+      <a href="#experience" data-en="Experience">經歷</a>
+      <a href="#projects" data-en="Work">作品</a>
+      <a href="#skills" data-en="Skills">專長</a>
+      <a href="#contact" class="nav-cta" data-en="Contact">聯絡我</a>
+      <button id="langToggle" class="lang-toggle" aria-label="switch language">EN</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div class="eyebrow mono"><span class="dot"></span>Product Development · Mechanical Engineering</div>
+    <h1 class="name" data-en="Jun Wei Luo">羅竣瑋</h1>
+    <div class="name-en">Kevin Luo</div>
+    <p class="lead" data-en="Taking products from <b>concept</b> to <b>mass production</b> — a mechanical engineer spanning design, supply chain, production setup, and team building.">把產品從<b>概念</b>帶到<b>量產</b>——橫跨機構設計、供應鏈、產線建置與團隊組建的工程負責人。</p>
+    <p class="sub" data-en="Mechanical design is my core, but what I do best is take a design from R&amp;D and prototype all the way to production — delivered on time and on target.">機構設計是我的本職，而我更擅長把一個設計從 RD、原型，一路落地到小批量量產（0 → 1 → 小批量）——準時、達標地交付。</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary" data-en="See my work →">看我做過的東西 →</a>
+      <a href="resume.pdf" class="btn btn-ghost" target="_blank" data-en="Download résumé">下載履歷</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="num"><i>6</i>+</div><div class="lbl" data-en="yrs mechanical design">年機構設計經驗</div></div>
+      <div class="stat"><div class="num"><i>2</i></div><div class="lbl" data-en="industries (auto · robotics)">產業橫跨（汽車·機器人）</div></div>
+      <div class="stat"><div class="num" style="font-size:1.4rem;line-height:1.4"><i data-en="Design→Prod">設計→量產</i></div><div class="lbl" data-en="end-to-end delivery">全程落地</div></div>
+      <div class="stat"><div class="num"><i>3</i>+</div><div class="lbl" data-en="invention patents">發明專利</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title" data-en="About Me">關於我</h2><span class="sec-line"></span></div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p data-en="I'm a <b>mechanical engineer</b>. Mechanical design is my core — and what sets me apart is the ability to take a design <b>from R&amp;D and prototype all the way to mass production</b>.">我是一位<b>機構工程師</b>。機構設計是我的本職，而讓我與眾不同的，是能把一個設計<b>從研發、原型，一路落地到量產</b>。</p>
+        <p data-en="My three roles built on each other. At <b>NTUT</b>, I led a national R&amp;D project across two tracks — robotics R&amp;D (prototypes, patents) and business development (planning, market and partner development) — laying a foundation in both engineering and business.">我的三段經歷是層層累積的。在<b>北科大</b>，我擔任研發計畫總負責人，角色橫跨機器人研發與商業開發——一邊做機器人 RD、原型機與專利，一邊做商業規劃、市場與合作對象開發，奠定了「工程 + 商業」的複合底子。</p>
+        <p data-en="Then at <b>Foxtron</b>, I developed exterior parts for electric SUVs (Model C / LUXGEN n7, Cariva), managed 6–7 suppliers, and learned mass-production ramp, systems management, and supply chain — turning &quot;I can build a prototype&quot; into &quot;I can build it reliably at scale.&quot;">接著在<b>鴻華先進</b>開發純電 SUV 外裝零件（Model C / LUXGEN n7、Cariva），管理 6–7 家供應商，學會了量產導入、系統管理與供應鏈——把「做得出原型」升級成「能穩定量產」。</p>
+        <p data-en="Now at robotics startup <b>Anvil Robotics</b> as a founding engineer, those two skill sets finally <b>converge</b>: I use my R&amp;D background for product development, my manufacturing and supply-chain experience to make it production-ready, and here I've begun <b>building and leading a team</b> (interviewing, mentoring interns and full-time hires).">現在在機器人新創 <b>Anvil Robotics</b> 擔任創始工程師，前面兩段的能力第一次<b>合流</b>：我用北科大的研發能力做產品開發，用鴻華的量產與供應鏈經驗把它落地，並在這裡真正開始<b>建立與帶領團隊</b>（面試、帶實習與正職）。</p>
+        <p data-en="On the technical side, I know the full design-to-manufacturing flow: <b>3D/2D mechanical design, CNC machining, sheet metal, injection molding, 3D printing, plus prototyping and test validation</b> — so I can push a design from a bench prototype to a product that\'s stable and manufacturable at scale."><b>在硬技術上</b>，我熟悉從設計到製造的完整流程：<b>3D／2D 機構設計、CNC 加工、鈑金、塑膠射出模具、3D 列印，以及原型製作與測試驗證</b>。這讓我能把一個設計，從桌上的原型推進到能穩定、可規模化製造的產品。</p>
+        <div class="capsules">
+          <span class="cap" data-en="R<span class='amp'>&amp;</span>D to production">研發到量產落地</span><span class="cap" data-en="Founding Engineer">創始工程師</span><span class="cap" data-en="Production &amp; Project Mgmt">生產與專案管理</span><span class="cap" data-en="Supply chain &amp; procurement">供應鏈與採購</span><span class="cap" data-en="Robotics systems">機器人系統</span><span class="cap" data-en="Automotive exterior">汽車外裝零件</span>
+        </div>
+      </div>
+      <div class="portrait-wrap reveal">
+        <img class="portrait" src="images/portrait.jpg" alt="羅竣瑋">
+        <div class="portrait-tag">JUN WEI LUO</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" style="background:linear-gradient(180deg,transparent,rgba(29,95,214,.03));">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title" data-en="Experience · Skills built at each step">經歷 · 每段培養的能力</h2><span class="sec-line"></span></div>
+    <div class="xp">
+
+      <div class="job reveal">
+        <div class="job-meta">
+          <img class="job-logo logo-square" src="images/logo-anvil-black.png" alt="Anvil">
+          <div class="when" data-en="2025.08 — Present">2025.08 — 現在</div>
+          <div class="role">Founding Engineer<br><span style="font-weight:500;font-size:.86rem;color:var(--ink-soft)">Senior Mechanical Engineer · Engineering Manager</span></div>
+          <div class="org">Anvil Robotics</div>
+          <div class="tag" data-en="Founding · R<span class='amp'>&amp;</span>D to Production">專案管理 × 原型落地</div>
+        </div>
+        <div class="job-body">
+          <div class="ctx" data-en="A robotics startup offering custom, full-stack robot solutions to teams at Nvidia, Google, Path Robotics and more. Its ready-to-go hardware-software kits save customers hardware-development time so they can jump straight into data collection for AI training.">新創機器人公司（客製化機器人整套解決方案，服務 Nvidia、Google、Path Robotics 等團隊）。透過提供 ready-to-go 的軟硬體整合方案，為客戶省去硬體開發的時間，讓客戶能直接展開 AI 訓練所需的資料蒐集工作。</div>
+          <p style="color:var(--ink-soft);font-size:.95rem;margin-bottom:16px" data-en="As a founding engineer, I integrate my robotics R&amp;D background (NTUT) with my mass-production and supply-chain experience (Foxtron) to take products from prototype to stable production — and here I've built and led a team.">作為創始工程師，整合北科大的機器人研發經驗與鴻華的量產、供應鏈經驗，把產品從研發原型帶到穩定量產，並在此建立與帶領團隊。</p>
+          <ul class="caps">
+            <li><span class="k" data-en="Mechanical &amp; hardware design">機構與硬體設計</span><span class="v" data-en="Mechanical, wiring and hardware design for OpenArm, Grippers, camera modules, OpenYAM and more — defining specs together with the RD team.">參與 OpenArm、Grippers、相機模組、OpenYam 等多項產品的機構、線材、硬體設計，與 RD 團隊共同定義並確認產品規格。</span></li>
+            <li><span class="k" data-en="R<span class='amp'>&amp;</span>D-to-production integration">研發到量產整合</span><span class="v" data-en="Apply robotics R&amp;D and prototyping experience to product development, combined with manufacturing and supply-chain know-how, turning designs into reliably manufacturable products.">運用機器人 RD 與原型機經驗做產品開發，結合量產與供應鏈知識，將設計轉化為可穩定、可重複製造的產品。</span></li>
+            <li><span class="k" data-en="Team building &amp; management">團隊建立與管理</span><span class="v" data-en="Interview, mentor and lead interns and full-time hires on the production and hardware RD teams; own staffing.">面試、帶領產線與硬體 RD 團隊的實習與正職人員，負責人力配置。</span></li>
+            <li><span class="k" data-en="Supply chain">供應鏈管理</span><span class="v" data-en="Purchasing, negotiation, supplier management, delivery planning, and incoming quality.">採購、議價、供應商管理、交貨計畫排定與零件品質確認。</span></li>
+            <li><span class="k" data-en="Production line from zero">產線從 0 建置</span><span class="v" data-en="Built the production line from scratch — assembly SOPs, inventory, equipment, and test plans.">從無到有搭建生產線，建立組裝 SOP、庫存管理、設備管理與測試計畫。</span></li>
+            <li><span class="k" data-en="Customers &amp; internal tools">客戶與內部工具</span><span class="v" data-en="Handle customer quality feedback and customization requests; act as point of contact for the internal AI agent covering inventory, orders, and RD project tracking.">對應客戶的品質問題回饋與客製化需求；擔任公司 AI Agent 導入窗口，對接庫存、訂單與 RD 專案進度管理。</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job reveal">
+        <div class="job-meta">
+          <img class="job-logo" src="images/logo-foxtron.png" alt="Foxtron">
+          <div class="when" data-en="2023.04 — 2025.07">2023.04 — 2025.07</div>
+          <div class="role" data-en="Automotive Trim Design &amp; Development Engineer">車裝設計開發工程師</div>
+          <div class="org" data-en="Foxtron">鴻華先進科技</div>
+          <div class="tag" data-en="Mass-production execution">量產專案的執行與應變</div>
+        </div>
+        <div class="job-body">
+          <div class="ctx" data-en="Electric SUVs — Model C (LUXGEN n7) and Cariva. Owned exterior plastic part design and mass-production ramp, managing 6–7 suppliers and coordinating across styling, CAE, integration, and planning.">純電 SUV — Model C（LUXGEN n7）與 Cariva 車型；負責外裝塑件零件的設計開發與量產導入，管理 6–7 家供應商，跨造型／CAE／集成／產企平行溝通。</div>
+          <ul class="caps">
+            <li><span class="k" data-en="Design &amp; coordination">設計與協調</span><span class="v" data-en="CATIA modeling, structural section analysis, competitor benchmarking, spec confirmation, and recurrence prevention.">CATIA 建模、結構斷面分析、競車 Benchmark、工規確認，落實問題點再發防止。</span></li>
+            <li><span class="k" data-en="Suppliers &amp; tooling">供應商與模具</span><span class="v" data-en="Reviewed structure and mold-process feasibility with suppliers; owned the TKO→SOP schedule and part delivery.">與供應商檢討結構及模具製程可行性，掌握 TKO→SOP 日程與各階段零件交貨。</span></li>
+            <li><span class="k" data-en="Quality management">品質管理</span><span class="v" data-en="Durability testing, urgent field-issue countermeasures, joint checks, 3D-scan fitting analysis, and spec revision.">耐久測試驗證、品情問題緊急對策、對手件 Joint Check、3D 掃描擬合解析與工規修訂。</span></li>
+          </ul>
+          <div class="win">▲ <span data-en="Ran the complete design-to-mass-production cycle for both Model C and Cariva — both successfully mass-produced (shown at Hon Hai Tech Day 2023/2024). Led the Cariva rear-spoiler aero-optimization project, cutting that part's cost by 50%; replanned flexibly under design changes and still hit the production timeline.">完整走完 Model C 與 Cariva 兩車型從設計到量產的流程，皆成功量產（車型於鴻海科技日 HHTD2023／2024 亮相）。其中主導 Cariva 尾翼空力優化專案，使該零件成本降低 50%；面對設計變更仍靈活重排程並準時導入量產。</span></div>
+        </div>
+      </div>
+
+      <div class="job reveal">
+        <div class="job-meta">
+          <img class="job-logo" src="images/logo-utl.png" alt="UTL">
+          <div class="when" data-en="2018.08 — 2020.09">2018.08 — 2020.09</div>
+          <div class="role" data-en="R<span class='amp'>&amp;</span>D Project Lead">研發計畫總負責人</div>
+          <div class="org" data-en="NTUT · UTL Lab">北科大 UTL 尖端科技實驗室</div>
+          <div class="tag" data-en="Robotics R<span class='amp'>&amp;</span>D × Business Dev">機器人研發 × 商業開發</div>
+        </div>
+        <div class="job-body">
+          <div class="ctx" data-en="A 2-year, NT$12M government-funded industry-innovation R&amp;D project (RSC). As total project lead, I headed the R&amp;D team across two main tracks: robotics R&amp;D and business development.">教育部產業創新研發計畫 (RSC)：2 年、總額 1,200 萬元、經費來自國家的新創育成計畫。擔任計畫總負責人，帶領研發團隊，角色橫跨機器人研發與商業開發兩大主軸。</div>
+          <ul class="caps">
+            <li><span class="k" data-en="Robotics R&amp;D">機器人研發</span><span class="v" data-en="Mechanical design lead: specs, prototyping and testing (AIVBOT, hub-motor arm, joint module, exoskeleton); patent search, claim scoping, drafting and defense.">機構設計負責人：規格制定、Prototype 打樣組裝與測試改善（AIVBOT、輪轂機械手臂、關節模組、外骨骼）；專利檢索、範圍規劃、撰寫與答辯。</span></li>
+            <li><span class="k" data-en="Business development">商業開發與合作</span><span class="v" data-en="Wrote and executed the business plan, business-model design, market and potential-buyer analysis, and supplier/partner outreach.">撰寫並執行商業計畫書、商業模式規劃、市場與潛在買家分析、對外洽談供應商與合作夥伴。</span></li>
+            <li><span class="k" data-en="Budget &amp; procurement">經費與採購</span><span class="v" data-en="Project budgeting, accounting, and purchasing.">計畫經費規劃、會計與採購管理。</span></li>
+          </ul>
+          <div class="win">▲ <span data-en="Passed the first-year project review; results were invited to TAIROS (Taiwan Automation Intelligence and Robotics Show), and the project earned multiple invention patents.">通過第一年計畫審核；多項成果受邀參加 <b>TAIROS</b> 台灣自動化工業大展，取得多項<b>發明專利</b>。</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title" data-en="Work">作品</h2><span class="sec-line"></span></div>
+
+    <div class="feature reveal" data-project="anvil" style="cursor:pointer">
+      <div class="feature-img"><img src="images/anvil-lineup.jpg" alt="Anvil 產品線"></div>
+      <div class="feature-body">
+        <div class="meta" data-en="ANVIL ROBOTICS · CURRENT">ANVIL ROBOTICS · 現職</div>
+        <h3 data-en="Anvil Robot Product Line">Anvil 機器人產品線</h3>
+        <p data-en="A hardware-software platform for Physical AI, with ready-to-go devkits that let teams collect data, train and deploy models from Day 1.">Physical AI 的軟硬體平台，提供 ready-to-go devkits，讓團隊 Day 1 即可蒐集資料、訓練與部署模型。</p>
+        <p data-en="As a founding engineer, I own hardware optimization and mass production across the whole line: from the OpenArm dual-arm system, OpenYAM, and grippers to the 60fps camera module and Devbox.">身為創始工程師，我負責整條產品線的硬體優化與量產化：從 OpenArm 雙臂系統、OpenYAM、夾爪，到 60fps 相機模組與 Devbox。</p>
+        <div class="tags"><span>OpenArm 2.0</span><span>OpenYAM</span><span>Grippers</span><span data-en="Camera module">相機模組</span><span>Devbox</span></div>
+      </div>
+    </div>
+
+    <div class="group-label"><span class="gl-title" data-en="Anvil Product Line">Anvil 產品線</span><span class="gl-note">CURRENT · 2025–</span><span class="gl-line"></span></div>
+    <div class="proj-grid">
+      <div class="proj reveal" data-project="openarm">
+        <div class="proj-img"><img src="images/anvil-openarm.jpg" alt="OpenArm"></div>
+        <div class="proj-body"><div class="meta" data-en="ROBOTICS · ANVIL">ROBOTICS · ANVIL</div><h3 data-en="OpenArm 2.0 Dual-Arm System">OpenArm 2.0 雙臂系統</h3><p data-en="Anvil dual-arm robot system with grippers and camera modules — a complete hardware platform for data collection.">Anvil 雙臂機器人系統，含夾爪與相機模組，資料蒐集用的整套硬體平台。</p><div class="badge" data-en="Hardware optimization · Production">硬體優化 · 量產化</div></div>
+      </div>
+      <div class="proj reveal" data-project="openyam">
+        <div class="proj-img"><img src="images/openyam.jpg" alt="OpenYAM"></div>
+        <div class="proj-body"><div class="meta">ROBOTICS · ANVIL</div><h3 data-en="OpenYAM System">OpenYAM 系統</h3><p data-en="Anvil robot platform with Quest teleoperation, supporting high-precision data collection and remote control.">Anvil 機器人平台，搭配 Quest 遙操作，支援高精度資料蒐集與遠端控制。</p><div class="badge" data-en="Hardware optimization · Production">硬體優化 · 量產化</div></div>
+      </div>
+    </div>
+
+    <div class="group-label"><span class="gl-title" data-en="Automotive Production">汽車量產</span><span class="gl-note">FOXTRON · 2023–2025</span><span class="gl-line"></span></div>
+    <div class="proj-grid">
+      <div class="proj reveal" data-project="modelc">
+        <div class="proj-img"><img src="images/modelc.jpg" alt="Model C"></div>
+        <div class="proj-body"><div class="meta" data-en="AUTOMOTIVE · PRODUCTION">AUTOMOTIVE · 量產</div><h3 data-en="Model C — LUXGEN n7">Model C — LUXGEN n7</h3><p data-en="Electric SUV exterior parts: spoiler, tailgate trim, wheel arch, under guard and more — involved from design through mass production.">純電 SUV 外裝零件：擾流板、背門飾板、輪弧、下護板等，從設計到量產全程參與。</p><div class="badge" data-en="Mass-produced · Shown at HHTD">已量產 · HHTD 亮相</div></div>
+      </div>
+      <div class="proj reveal" data-project="cariva">
+        <div class="proj-img"><img src="images/cariva.jpg" alt="Cariva"></div>
+        <div class="proj-body"><div class="meta" data-en="AUTOMOTIVE · PRODUCTION">AUTOMOTIVE · 量產</div><h3 data-en="Foxtron Cariva">Foxtron Cariva</h3><p data-en="Derivative-model exterior part development; managed suppliers and drove production under design changes; led the rear-spoiler aero-optimization project.">衍生車型外裝零件開發，管理供應商並協調設計變更下的量產導入；主導尾翼空力優化專案。</p><div class="badge" data-en="Mass-produced · Aero optimization">已量產 · 尾翼空力優化</div></div>
+      </div>
+    </div>
+
+    <div class="group-label"><span class="gl-title" data-en="Robotics R<span class='amp'>&amp;</span>D">機器人研發</span><span class="gl-note" data-en="UTL LAB · 2018–2020">UTL LAB · 2018–2020</span><span class="gl-line"></span></div>
+    <div class="proj-grid">
+      <div class="proj reveal" data-project="aivbot">
+        <div class="proj-img"><img src="images/aivbot-real.jpg" alt="AIVBOT"></div>
+        <div class="proj-body"><div class="meta" data-en="ROBOTICS · PATENT">ROBOTICS · 專利</div><h3 data-en="AIVBOT Autonomous Robot">AIVBOT 自走機器人</h3><p data-en="A mobile robot with innovative hub servo motors, combining a robotic arm on an autonomous platform; mechanical design lead.">創新輪轂伺服馬達之移動機器人，結合機械手臂的自走平台，機構設計負責人。</p><div class="badge" data-en="Shown at TAIROS">TAIROS 展出</div></div>
+      </div>
+      <div class="proj reveal" data-project="arm4axis">
+        <div class="proj-img"><img src="images/arm-4axis.jpg" alt="4軸機械手臂"></div>
+        <div class="proj-body"><div class="meta" data-en="ROBOTICS · PATENT">ROBOTICS · 專利</div><h3 data-en="Hub-Motor 4-Axis Robotic Arm">新型輪轂 4 軸機械手臂</h3><p data-en="Designed for AIV mounting: compact under a 14KG payload, using a cycloidal reducer combined with hub motors.">以搭載於 AIV 自走車為目標，14KG 負載下縮小體型，採擺線減速機構結合輪轂馬達。</p><div class="badge">Patent</div></div>
+      </div>
+      <div class="proj reveal" data-project="omniwheel">
+        <div class="proj-img"><img src="images/omniwheel.jpg" alt="萬向輪平台"></div>
+        <div class="proj-body"><div class="meta" data-en="ROBOTICS · PATENT">ROBOTICS · 專利</div><h3 data-en="Omni-Wheel Platform">萬向輪自走平台</h3><p data-en="Magnetic-encoder hub motors embedded in omni-wheels; a trackless autonomous platform design.">磁性編碼器嵌合輪轂馬達、萬向輪自走車體，無軌自走平台設計。</p><div class="badge">Patent</div></div>
+      </div>
+      <div class="proj reveal" data-project="hubmotor">
+        <div class="proj-img"><img src="images/hub-motor.jpg" alt="關節模組"></div>
+        <div class="proj-body"><div class="meta" data-en="ROBOTICS · PATENT">ROBOTICS · 專利</div><h3 data-en="High-Torque Joint Module">高扭力關節模組</h3><p data-en="Integrates an outer-rotor motor, two-stage planetary reducer, encoder and driver — compact with high torque.">整合外轉子馬達、二階行星減速機構、編碼器與驅動器，體積小、扭力大。</p><div class="badge">Patent</div></div>
+      </div>
+      <div class="proj reveal" data-project="exo">
+        <div class="proj-img"><img src="images/exoskeleton.jpg" alt="抱人外骨骼"></div>
+        <div class="proj-body"><div class="meta" data-en="ROBOTICS · PATENT">ROBOTICS · 專利</div><h3 data-en="Load-Bearing Exoskeleton">抱人外骨骼</h3><p data-en="A high-load powered exoskeleton that can lift a person, reducing caregivers' lumbar strain; from 3D design to physical prototype.">可抱起人體的高負載動力外骨骼，降低照護者腰椎負荷；從 3D 設計到實體打樣。</p><div class="badge">Patent</div></div>
+      </div>
+    </div>
+
+    <div class="group-label"><span class="gl-title" data-en="Competitions">競賽</span><span class="gl-note" data-en="AWARD · 2015–2016">AWARD · 2015–2016</span><span class="gl-line"></span></div>
+    <div class="proj-grid">
+      <div class="proj reveal" data-project="competition">
+        <div class="proj-img"><img src="images/competition.jpg" alt="機器人競賽"></div>
+        <div class="proj-body"><div class="meta" data-en="AWARD · COMPETITION">AWARD · 競賽</div><h3 data-en="National Robot Creativity Competition">全國機器人創意競賽</h3><p data-en="Palletizing arm and SCARA arm — 2nd place (domestic category) in two national robot creativity competitions.">堆垛機械手臂與 SCARA 機械手臂，兩屆全國機器人創意競賽國產組第二名。</p><div class="badge" data-en="2nd place ×2">全國第二名 ×2</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="skills" style="background:linear-gradient(180deg,transparent,rgba(29,95,214,.03));">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title" data-en="Skills">專長</h2><span class="sec-line"></span></div>
+    <div class="skill-grid">
+      <div class="skill-card lead-card reveal">
+        <h4><span class="n">A</span> <span data-en="Product Development / PM">產品開發 / 專案管理</span></h4>
+        <div class="tags"><span data-en="Operations planning">運營規劃</span><span data-en="Business modeling">商業模式規劃</span><span data-en="Schedule control">專案時程掌控</span><span data-en="Budget &amp; cost planning">資金與成本規劃</span><span data-en="Cross-company deals">跨公司合作洽談</span><span data-en="Supplier management">供應商管理</span><span data-en="Production setup">產線建置</span><span data-en="Mass-production ramp">量產化導入</span><span data-en="Team building &amp; staffing">團隊組建與人力配置</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <h4><span class="n">B</span> <span data-en="Mechanical Design">機械設計</span></h4>
+        <div class="tags"><span data-en="3D modeling">3D 機構圖</span><span data-en="2D drawings">2D 工程圖</span><span data-en="Prototyping">打樣經驗</span><span>CNC</span><span data-en="Sheet metal">板金</span><span data-en="Injection molding">塑膠射出模具</span><span data-en="3D printing">3D 列印</span><span>Creo Parametric</span><span>SolidWorks</span><span>CATIA</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <h4><span class="n">C</span> <span data-en="Patents">專利</span></h4>
+        <div class="tags"><span data-en="Prior-art search">先前技術檢索</span><span data-en="TW patent drafting">撰寫台灣發明專利</span><span data-en="Claim scoping">Claim 申請範圍</span><span data-en="Patent drawings">專利製圖</span><span data-en="Patent defense">專利答辯</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <h4><span class="n">D</span> <span data-en="Languages · Education">語言 · 學歷</span></h4>
+        <div class="tags" style="margin-bottom:10px"><span data-en="Chinese (native)">中文（母語）</span><span data-en="English (working)">英文（略懂）</span></div>
+        <div class="tags"><span data-en="M.S. Mechatronics, NTUT">北科大 機電整合碩士</span><span data-en="B.S. Mechanical Eng., TKU">淡江 機械工程</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact reveal">
+      <div>
+        <h2 data-en="Let's build<br>your idea.">一起把想法<br>造出來。</h2>
+        <p data-en="Interested in collaborating on product development, robotics, or mechanical design? Get in touch.">對產品開發、機器人系統或機構設計的合作有興趣？歡迎直接聯絡我。</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:kevin160483@gmail.com"><div><span class="lab">EMAIL</span><span class="val">kevin160483@gmail.com</span></div></a>
+        <a href="tel:0972214982"><div><span class="lab">PHONE</span><span class="val">0972 214 982</span></div></a>
+        <a href="https://www.linkedin.com/company/anvil-robotics/" target="_blank" rel="noopener"><div><span class="lab">CURRENT</span><span class="val">Anvil Robotics ↗</span></div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="close">×</button>
+    <div class="modal-gallery" id="modalGallery"></div>
+    <div class="modal-body">
+      <div class="meta" id="modalMeta"></div>
+      <h3 id="modalTitle"></h3>
+      <div id="modalDesc"></div>
+      <div class="badge" id="modalBadge"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="mono">JUN WEI LUO · MECHANICAL ENGINEER · TAIPEI</div>
+    <div style="margin-top:8px" data-en="© 2026 Jun Wei Luo. Designed to build things.">© 2026 羅竣瑋. Designed to build things.</div>
+  </div>
+</footer>
+
+<script>
+  const burger=document.getElementById('burger');
+  const nav=document.getElementById('navlinks');
+  burger.addEventListener('click',()=>{nav.classList.toggle('open')});
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+  const io=new IntersectionObserver((entries)=>{entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // ---- language toggle (中 / EN) ----
+  let LANG = 'zh';
+  const langBtn = document.getElementById('langToggle');
+  // store original Chinese text for each translatable element
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    el.setAttribute('data-zh', el.innerHTML);
+  });
+  function applyLang(lang){
+    LANG = lang;
+    document.querySelectorAll('[data-en]').forEach(el=>{
+      el.innerHTML = (lang==='en') ? el.getAttribute('data-en') : el.getAttribute('data-zh');
+    });
+    langBtn.textContent = (lang==='en') ? '中' : 'EN';
+    document.documentElement.lang = (lang==='en') ? 'en' : 'zh-Hant';
+  }
+  langBtn.addEventListener('click', ()=> applyLang(LANG==='zh' ? 'en' : 'zh'));
+
+  // ---- project modal data ----
+  // 每個專案：images 可放多張（之後補圖時，把檔名加進陣列即可）
+  const PROJECTS = {
+    anvil: {
+      meta:'ANVIL ROBOTICS · 現職',
+      title:'Anvil 機器人產品線',
+      images:['images/anvil-lineup.jpg'],
+      desc:['Anvil Robotics 是專注於 Physical AI 的軟硬體平台，提供 ready-to-go devkits，讓團隊在 Day 1 就能蒐集資料、訓練並部署模型（支援 ACT、Diffusion Policy、Nvidia GR00T、Pi 等框架）。',
+            '作為創始工程師，我負責整條產品線的硬體優化與量產化——涵蓋 OpenArm 雙臂系統、OpenYAM、客製化夾爪、60fps 相機模組與 Devbox。',
+            'OpenArm 2.0 改良自開源雙臂 manipulator，採用人形手臂形態，讓遙操作者幾乎零學習曲線；以低成本、易製造、易修改維修為設計目標，是理想的研發平台，目前已出貨數百套。',
+            '我的工作是把這些產品從設計推進到可穩定、可重複製造：對接客戶的品質回饋與客製化需求、管理供應鏈、從 0 建立產線 SOP、面試組建團隊。'],
+      badge:'硬體優化 · 量產化'
+    },
+    openarm: {
+      meta:'ROBOTICS · ANVIL',
+      title:'OpenArm 2.0 雙臂系統',
+      images:['images/anvil-openarm.jpg'],
+      desc:['Anvil 雙臂機器人系統，含夾爪與相機模組，是資料蒐集用的整套硬體平台。採用人形手臂形態，讓遙操作者幾乎零學習曲線。',
+            '負責機構、線材、硬體設計與量產優化，將設計轉化為可穩定、可重複製造的產品。'],
+      badge:'硬體優化 · 量產化'
+    },
+    openyam: {
+      meta:'ROBOTICS · ANVIL',
+      title:'OpenYAM 系統',
+      images:['images/openyam.jpg'],
+      desc:['Anvil 機器人平台，搭配 Quest 遙操作，讓操作者以直覺的方式遠端控制機器人，進行高精度的資料蒐集。',
+            '負責硬體優化與量產化，讓產品能穩定、可重複地被製造出來。'],
+      badge:'硬體優化 · 量產化'
+    },
+    modelc: {
+      meta:'AUTOMOTIVE · 量產',
+      title:'Model C — LUXGEN n7',
+      images:['images/modelc.jpg'],
+      desc:['主要負責車後外裝零件的設計與開發。工作內容包含車裝零件設計 Layout、開發日程管理、供應商零件品質管理、問題點解析與對策。',
+            '參與 Model C 專案的零件設計開發：量產車型為 LUXGEN n7，衍生車型包含大電池版與國外量產版。',
+            '負責外裝零件：擾流板、背門飾板、後字標、輪弧、內輪罩、下護板、車側貼紙。完整走完從設計到量產，已成功量產（車型於鴻海科技日 HHTD2023／2024 亮相）。'],
+      badge:'已量產 · HHTD 亮相'
+    },
+    cariva: {
+      meta:'AUTOMOTIVE · 量產',
+      title:'Foxtron Cariva',
+      images:['images/cariva.jpg'],
+      desc:['衍生車型外裝零件開發，負責項目與 Model C 相同，管理 6–7 家供應商。同樣完整走完從設計到量產，已成功量產。',
+            '主導尾翼空力優化專案：面對設計變更仍靈活重新排程並準時導入量產，該零件成本降低 50%。'],
+      badge:'已量產 · 尾翼空力優化'
+    },
+    aivbot: {
+      meta:'ROBOTICS · 專利',
+      title:'AIVBOT 自走機器人',
+      images:['images/aivbot-real.jpg','images/aivbot-render.jpg'],
+      desc:['以萬向輪自走平台為基礎，進行底盤、萬向輪整合改良設計與系統優化，並結合工業型機械手臂，與產業界配合，達成裝配工廠之相關組裝運送任務。',
+            '具備多個感測器（相機、光達、超聲波感測器等）提供多項回饋訊號，並使用 ROS 平台導入自走導航與人像辨識、物品辨識功能。'],
+      badge:'TAIROS 展出'
+    },
+    arm4axis: {
+      meta:'ROBOTICS · 專利',
+      title:'新型輪轂 4 軸機械手臂',
+      images:['images/arm-4axis.jpg','images/arm-3d.jpg'],
+      desc:['以搭載於 AIV 無軌自走車上為設計目標，要求其在 14KG 負載的情況下縮小體型，以輕量化、簡單化、單元化為設計理念。',
+            '採用擺線減速機構與輪轂馬達做結合，作為機械手臂的關節，利用其體積小、高輸出扭力的優點，並結合特殊走線設計，創造創新輪轂馬達手臂。此發明已申請發明專利保護。'],
+      badge:'Patent'
+    },
+    omniwheel: {
+      meta:'ROBOTICS · 專利',
+      title:'萬向輪自走平台',
+      images:['images/omniwheel.jpg','images/omniwheel-detail.jpg'],
+      desc:['以高自由度之萬向輪、輪轂馬達與磁性感測器技術結合，製作嵌合式萬向輪轂馬達，作為無軌自走車（AGV）之驅動輪；加上車體與工業應用層，完成萬向輪自走車的設計開發。',
+            '選用萬向輪 / 麥克納姆輪（mecanum wheel）以達成高自由度移動，並將輪轂馬達嵌入萬向輪、內置磁性編碼器回饋，使驅動與輪子成為一個整體，為底盤與懸吊保留設計空間。',
+            '整體分為車體層與應用層：車體層設計自走車的運作核心（電池與電路系統）；應用層可搭載機械手臂、物料車、電梯等各種模組。車身扁平化（600×890×377 mm），為未來應用保留彈性。'],
+      badge:'Patent'
+    },
+    hubmotor: {
+      meta:'ROBOTICS · 專利',
+      title:'高扭力關節模組',
+      images:['images/hub-motor.jpg','images/joint-exploded.jpg'],
+      desc:['本發明提供一種關節模組，將外轉子馬達、二階行星減速機構、編碼器、殼體結構與驅動器整合為一體。',
+            '作為照護機器人、自走車、機械手臂所選用之模組，以體積小、重量輕、扭力大為性能指標設計。已申請發明專利。',
+            '規格：減速比 136、重量 7 kg、額定扭矩 320 N·m、額定轉速 7.5 rpm、最大扭矩 638 N·m、最大扭矩轉速 2.6 rpm、馬達瓦數 200–250 W。'],
+      badge:'Patent'
+    },
+    exo: {
+      meta:'ROBOTICS · 專利',
+      title:'抱人外骨骼',
+      images:['images/exoskeleton.jpg','images/exo-cad.jpg'],
+      desc:['研發一款用於抱人之高負載動力外骨骼裝置，降低照護者在長期工作下造成 L5/S1 腰椎骨骼受重量壓迫產生的椎間盤疾病。',
+            '同時提供更安全的方式，幫助長者從 A 地轉移至 B 地，並協助使用者減輕 L5/S1 腰椎骨骼及身體肌肉負荷。',
+            '負責從 3D 機構設計到實體 Prototype 打樣組裝。'],
+      badge:'Patent'
+    },
+    competition: {
+      meta:'AWARD · 競賽',
+      title:'全國機器人創意競賽',
+      images:['images/competition.jpg'],
+      desc:['2016 年：堆垛機械手臂，負責機構整合、打樣與裝配，獲國產機器人組第二名。',
+            '2015 年：SCARA 機械手臂，以 Matlab 進行正逆向運動學分析，獲國產機器人組第二名。'],
+      badge:'全國第二名 ×2'
+    }
+  };
+
+  const PROJECTS_EN = {
+    anvil:{meta:'ANVIL ROBOTICS · CURRENT',title:'Anvil Robot Product Line',
+      desc:['Anvil Robotics is a hardware-software platform for Physical AI, with ready-to-go devkits that let teams collect data, train and deploy models (ACT, Diffusion Policy, Nvidia GR00T, Pi, etc.) from Day 1.',
+        'As a founding engineer, I own hardware optimization and mass production across the whole line — OpenArm, OpenYAM, custom grippers, the 60fps camera module and Devbox.',
+        'OpenArm 2.0 is an improved open-source dual-arm manipulator with a humanoid form factor that gives operators a near-zero learning curve; designed to be low-cost, easy to build, modify and repair. Hundreds of units have shipped.',
+        'My job is to push these products from design to reliable, repeatable manufacturing: handling customer quality feedback and customization, managing the supply chain, building production SOPs from zero, and interviewing and forming the team.'],
+      badge:'Hardware optimization · Production'},
+    openarm:{meta:'ROBOTICS · ANVIL',title:'OpenArm 2.0 Dual-Arm System',
+      desc:['Anvil\'s dual-arm robot system with grippers and camera modules — a complete hardware platform for data collection, with a humanoid form factor for near-zero operator learning curve.',
+        'Responsible for mechanical, wiring and hardware design plus production optimization, turning the design into a reliably manufacturable product.'],
+      badge:'Hardware optimization · Production'},
+    openyam:{meta:'ROBOTICS · ANVIL',title:'OpenYAM System',
+      desc:['Anvil robot platform paired with Quest teleoperation, letting operators intuitively control the robot remotely for high-precision data collection.',
+        'Responsible for hardware optimization and mass production, making the product stable and repeatable to manufacture.'],
+      badge:'Hardware optimization · Production'},
+    modelc:{meta:'AUTOMOTIVE · PRODUCTION',title:'Model C — LUXGEN n7',
+      desc:['Primarily responsible for rear exterior part design and development — part layout, schedule management, supplier quality management, and issue analysis & countermeasures.',
+        'Part of the Model C project: production model LUXGEN n7, with derivative versions (large-battery and overseas production).',
+        'Owned parts: spoiler, tailgate trim, rear badge, wheel arch, inner fender, under guard, side decals. Ran the full design-to-production cycle; successfully mass-produced (shown at Hon Hai Tech Day 2023/2024).'],
+      badge:'Mass-produced · Shown at HHTD'},
+    cariva:{meta:'AUTOMOTIVE · PRODUCTION',title:'Foxtron Cariva',
+      desc:['Derivative-model exterior part development, same scope as Model C, managing 6–7 suppliers; also ran the full design-to-production cycle and mass-produced successfully.',
+        'Led the rear-spoiler aero-optimization project: replanned flexibly under design changes and hit the production timeline, cutting that part\'s cost by 50%.'],
+      badge:'Mass-produced · Aero optimization'},
+    aivbot:{meta:'ROBOTICS · PATENT',title:'AIVBOT Autonomous Robot',
+      desc:['Built on an omni-wheel autonomous platform with improved chassis and omni-wheel integration plus system optimization, combined with an industrial robotic arm, to perform assembly-plant transport tasks.',
+        'Equipped with multiple sensors (camera, LiDAR, ultrasonic) for rich feedback, using ROS for autonomous navigation and person/object recognition.'],
+      badge:'Shown at TAIROS'},
+    arm4axis:{meta:'ROBOTICS · PATENT',title:'Hub-Motor 4-Axis Robotic Arm',
+      desc:['Designed to mount on an AIV autonomous vehicle, kept compact under a 14KG payload with lightweight, simple, modular design.',
+        'Uses a cycloidal reducer combined with hub motors as the arm\'s joints — leveraging their compact size and high output torque, with a special cable-routing design. Patent applied for.'],
+      badge:'Patent'},
+    omniwheel:{meta:'ROBOTICS · PATENT',title:'Omni-Wheel Platform',
+      desc:['Combines high-DOF omni-wheels, hub motors and magnetic sensing into an embedded omni-wheel hub motor, serving as the drive wheel of a trackless AGV; with a body and industrial application layer forming a full autonomous vehicle.',
+        'Uses mecanum wheels for high-DOF motion, with hub motors embedded in the wheels and built-in magnetic encoders, making drive and wheel one unit and freeing chassis/suspension space.',
+        'Split into a body layer (battery and electronics) and an application layer (arm, cart, lift, etc.). Flat body (600×890×377 mm) leaves flexibility for future applications.'],
+      badge:'Patent'},
+    hubmotor:{meta:'ROBOTICS · PATENT',title:'High-Torque Joint Module',
+      desc:['A joint module integrating an outer-rotor motor, two-stage planetary reducer, encoder, housing and driver into one unit.',
+        'Designed as a module for care robots, AGVs and robotic arms, with compact size, light weight and high torque as key metrics. Patent applied for.',
+        'Specs: reduction ratio 136, weight 7 kg, rated torque 320 N·m, rated speed 7.5 rpm, max torque 638 N·m, max-torque speed 2.6 rpm, motor power 200–250 W.'],
+      badge:'Patent'},
+    exo:{meta:'ROBOTICS · PATENT',title:'Load-Bearing Exoskeleton',
+      desc:['A high-load powered exoskeleton for lifting a person, reducing the L5/S1 lumbar disc strain caregivers suffer under prolonged work.',
+        'Also provides a safer way to move elderly people from A to B, easing the user\'s L5/S1 lumbar and muscular load.',
+        'Responsible from 3D mechanical design to physical prototype assembly.'],
+      badge:'Patent'},
+    competition:{meta:'AWARD · COMPETITION',title:'National Robot Creativity Competition',
+      desc:['2016: palletizing robotic arm — mechanism integration, prototyping and assembly; 2nd place, domestic category.',
+        '2015: SCARA arm — forward/inverse kinematics analysis in Matlab; 2nd place, domestic category.'],
+      badge:'2nd place ×2'}
+  };
+
+  const backdrop=document.getElementById('modalBackdrop');
+  const mGallery=document.getElementById('modalGallery');
+  const mMeta=document.getElementById('modalMeta');
+  const mTitle=document.getElementById('modalTitle');
+  const mDesc=document.getElementById('modalDesc');
+  const mBadge=document.getElementById('modalBadge');
+
+  function openModal(id){
+    const p = (LANG==='en' && PROJECTS_EN[id]) ? PROJECTS_EN[id] : PROJECTS[id];
+    const imgs = PROJECTS[id].images; // images same for both languages
+    if(!p)return;
+    mGallery.innerHTML=imgs.map(src=>`<img src="${src}" alt="${p.title}">`).join('');
+    mMeta.textContent=p.meta;
+    mTitle.textContent=p.title;
+    mDesc.innerHTML=p.desc.map(t=>`<p>${t}</p>`).join('');
+    mBadge.textContent=p.badge;
+    backdrop.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeModal(){
+    backdrop.classList.remove('open');
+    document.body.style.overflow='';
+  }
+
+  document.querySelectorAll('[data-project]').forEach(card=>{
+    card.addEventListener('click',()=>openModal(card.getAttribute('data-project')));
+  });
+  document.getElementById('modalClose').addEventListener('click',closeModal);
+  backdrop.addEventListener('click',e=>{if(e.target===backdrop)closeModal()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+</script>
+</body>
+</html>
